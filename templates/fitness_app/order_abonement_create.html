@@ -1,0 +1,63 @@
+{% extends 'fitness_app/base.html' %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class=" bg-secondary bg-opacity-50 w-50 text-white mx-auto border border-3 border-white p-4 rounded-3">
+            <p class="text-center mb-4 fs-2 text-uppercase">Оформление абонемента</p>
+            <form action="" method="post" class=" text-white">{% csrf_token %}
+
+
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Почта</label>
+                    <input type="email" disabled class="form-control" id="exampleFormControlInput1"
+                        placeholder="{{user.email}}">
+                </div>
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Имя и Фамилия</label>
+                    {% if not user.first_name or not user.last_name %}
+                    <input type="text" disabled class="form-control" id="exampleFormControlInput1"
+                        placeholder="Заполните поля имя и фамилия в своем профиле">
+                    {% else %}
+                    <input type="text" disabled class="form-control" id="exampleFormControlInput1"
+                        placeholder="{{ user.first_name }} {{ user.last_name }}">
+                    {% endif %}
+                </div>
+
+                <div class="form-group my-2">
+                    <div class="d-flex justify-content-around">
+                        <label for="{{form.ticket.id_for_label}}">{{form.abonement.label}}</label><br>
+                        <span>{{form.abonement}}</span>
+                    </div>
+
+                </div>
+                <!-- <div class="form-group">
+            <label for="{{ form.ticket.id_for_label }}">{{ form.ticket.label }}</label>
+            <select name="ticket" multiple class="form-control" id="{{ form.ticket.id_for_label }}">
+                {% for ticket in form.ticket %}
+                <option>{{ ticket }}</option>
+                {% endfor %}
+            </select>
+        </div> -->
+                <div class=" mt-2">
+                    <input type="submit" class="btn btn-outline-warning" value="Оформить">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock body %}

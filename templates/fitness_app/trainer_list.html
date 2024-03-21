@@ -1,0 +1,67 @@
+{% extends 'fitness_app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container text-center">
+    <div class="row">
+        {% for trainer in trainers %}
+        <div class="col-md-4">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+
+                    <div class="card d-flex flex-column ">
+                        <div class="d-flex justify-content-between ">
+                            <div class="col-md-3 p-2">
+                                <img src="{{ trainer.avatar.url }}"  class="img-fluid rounded-start">
+                                <div class="mt-4">
+                                    Отзывов: {{ trainer.reviews.count|default:'0' }}
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                {{ trainer.first_name }} {{ trainer.last_name }}
+                                <p>{{ trainer.email }}</p>
+                                <p>{{trainer.phone}} </p>
+                                <p>Опыт от{{ trainer.experience }} лет</p>
+                            </div>
+
+                        </div>
+                        <div class="h-50">
+                            <div class="card-body">
+                                <hr>
+                                <div class="card-header">
+                                    <h5>{{ trainer.get_position_display }}</h5>
+                                </div>
+
+                                <p class="card-text">{{trainer.bio|truncatechars:100 }}.</p>
+                                <div class="text-end">
+                                    <a href="{{ trainer.get_absolute_url }}" class="btn btn-outline-primary">Подробнее</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock body %}

@@ -1,0 +1,50 @@
+{% extends 'fitness_app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container text-center">
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Название тарифа</th>
+                    <th scope="col">Цена/руб </th>
+                    <th scope="col">Количество месяцев</th>
+                    <th scope="col">...</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for ticket in tickets %}
+                <tr>
+                    <th scope="row">{{ticket.id}}</th>
+                    <td>{{ticket.title }}</td>
+                    <td>{{ticket.price}}</td>
+                    <td>{{ticket.number_of_months}}</td>
+                    <td><a class="btn btn-primary" href="">Купить</td>
+                </tr>
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock body %}

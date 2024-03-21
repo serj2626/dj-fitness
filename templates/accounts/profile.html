@@ -1,0 +1,74 @@
+{% extends 'fitness_app/base.html' %}
+{% load static %}
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container text-center">
+    <div class="row">
+
+        <div class="card w-75 mx-auto py-4">
+            <h4 class="mb-3">Мой профиль</h4>
+            <div class="d-flex justify-content-around align-items-center pb-5">
+                <div>
+                    <img src="{{ request.user.avatar.url }}" width="300px" height="300px" alt="">
+                </div>
+                <div class="text-start">
+                    <h4>Статус:
+                        {% if user.club_member %}
+                        Член клуба
+                        {% else %}
+                        Клиент
+                        {% endif %}
+                    </h4>
+                    <hr>
+                    <h4>Имя:
+                        {% if request.user.first_name %}
+                        {{ request.user.first_name }}
+                        {% else %}
+                        <a href='' class='text-danger'> Указать</a>
+                        {% endif %}
+                    </h4>
+                    <h4>Фамилия:
+
+                        {% if request.user.last_name %}
+                        {{ request.user.last_name }}
+                        {% else %}
+                        <a href='' class='text-danger'> Указать</a>
+                        {% endif %}
+                    </h4>
+                    <h4>Возраст:
+                        {% if request.user.age %}
+                        {{ request.user.age }}
+                        {% else %}
+                        <a href='' class='text-danger'> Указать</a>
+                        {% endif %}
+                    </h4>
+                    <h4>Телефон:
+                        {% if request.user.phone %}
+                        {{ request.user.phone }}
+                        {% else %}
+                        <a href='' class='text-danger'> Указать</a>
+                        {% endif %}
+                    </h4>
+                    <h4>Почта: {{ request.user.email }}</h4>
+                </div>
+            </div>
+            <div class="btn-group w-50 mx-auto">
+                <a href="{% url 'profile_edit' request.user.pk %}" class="btn btn-primary"> Редактировать профиль</a>
+                {% include 'components/UI/BackButton.html' %}
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock body %}

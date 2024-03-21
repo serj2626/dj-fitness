@@ -1,0 +1,29 @@
+{% extends 'email/base_email.html' %}
+
+
+
+
+     
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4>Подтверждение почты</h4>
+                </div>
+                <div class="card-body">
+                    <p>Поздравляем, вы успешно подтвердили свою почту</p>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-success my-2" href="{% url 'login' %}">Продолжить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        
+{% endblock body %}
+   
