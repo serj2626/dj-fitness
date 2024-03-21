@@ -1,0 +1,30 @@
+{% extends "posts/base.html" %}
+
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="mx-auto text-white bg-white rounded-5">
+            {{ article.title|safe }}
+
+            {{ article.content|safe }}
+
+            <div class="m-2 text-end">
+                {% include 'components/UI/BackButton.html' %}
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+
+    {% endblock body %}

@@ -1,6 +1,10 @@
 # Сайт Фитнес-клуба на Django
 
 ![DJ FITNESS](static/screen/screen1.png)
+### На сайте представлены спортивные статьи
+![DJ FITNESS](static/screen/post_detail.png)
+### Оформление абонемента с последующей оплатой
+![DJ FITNESS](static/screen/order_abonement.png)
 
 ## Инструменты
 > 

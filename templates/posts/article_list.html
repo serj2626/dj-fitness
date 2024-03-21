@@ -1,0 +1,42 @@
+{% extends "posts/base.html" %}
+
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <p class="fs-1 text-warning">{{ title }} на тему {{ request }}</p>
+        <div class="mx-auto w-50">
+            {% for article in articles %}
+            <div class="alert alert-success border border-2 border-white rounded-4" role="alert">
+                <h4 class="alert-heading">{{ article.title|safe }}</h4>
+
+                <div class="btn-group">
+                    <a href="{{ article.get_absolute_url }}" class="btn btn-primary">Подробнее</a>
+                    {% include 'components/UI/BackButton.html' %}
+
+                </div>
+            </div>
+
+            {% empty %}
+            <p>Нет статей</p>
+            {% endfor %}
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+
+
+    {% endblock body %}

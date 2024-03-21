@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('fitness_app.urls')),
     path('accounts/', include('accounts.urls')),
     path('contacts/', include('contacts.urls')),
+    path('posts/', include('posts.urls')),
 ]
 
 
