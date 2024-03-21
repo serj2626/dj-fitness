@@ -2,7 +2,7 @@
 
 ![DJ FITNESS](static/screen/screen1.png)
 
-## Интсрументы
+## Инструменты
 > 
    - Python
    - Django
