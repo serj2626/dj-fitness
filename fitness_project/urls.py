@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('ckeditor5/', include('django_ckeditor_5.urls')),
     path('admin/', admin.site.urls),
     path('', include('fitness_app.urls')),
     path('accounts/', include('accounts.urls')),

@@ -13,13 +13,17 @@
 <div class="container">
     <div class="row">
         <div class="bg-secondary bg-opacity-50 w-50 text-white mx-auto border border-3 border-white p-4 rounded-3">
-            <p class="fs-3 text-uppercase mb-4">{{ title }}</p>
+            <p class="fs-3 text-warning text-uppercase mb-4">{{ title }}</p>
             <form action="" method="post">
 
                 {% csrf_token %}
 
                 {{ form|crispy}}
-                <input class="btn btn-outline-warning" type="submit" value="Записаться на тренировку">
+                <div>
+                    <input class="btn btn-outline-warning" type="submit" value="Записаться">
+                    {% include 'components/UI/BackButton.html' %}
+                </div>
+                
             </form>
         </div>
 

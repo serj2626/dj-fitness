@@ -1,19 +1,68 @@
 {% extends 'fitness_app/base.html' %}
 
 
+
 {% block title %}
-    {{ title }}
+{{ title }}
 {% endblock title %}
 
 
 
 
 {% block body %}
-    <div class="container">
-        <div class="row">
-            <div class="listAbonement">
-                <h1>Ваши абонементы</h1>
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="w-75 mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
+
+            <p class="fs-2 text-warning">Мои абонементы</p>
+
+
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Абонемент</th>
+                        <th scope="col">Цена/руб</th>
+                        <th scope="col">Начало</th>
+                        <th scope="col">Окончание</th>
+                        <th scope="col">Статус</th>
+                        <th scope="col">Оплачен</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for abon in abonements %}
+                    <tr>
+                        <th scope="row">{{ abon.id }}</th>
+                        <td>{{ abon.abonement }}</td>
+                        <td>{{ abon.abonement.price }}</td>
+                        <td>{{ abon.start }}</td>
+                        <td>{{ abon.end }}</td>
+                        <td>
+                            {% if abon.active %}
+                                Активный
+                            {% else %}
+                                Закрытый
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if abon.status %}
+                                Оплачен
+                            {% else %}
+                                Не оплачен
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <div class="alert alert-warning" role="alert">
+                        У вас нет абонементов!
+                    </div>
+
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+
 {% endblock body %}

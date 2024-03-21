@@ -1,0 +1,37 @@
+{% extends 'fitness_app/base.html' %}
+
+
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="w-75  mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
+
+            <h1>Мои Тренировки</h1>
+
+            {% for train in trains %}
+
+            <p>{{ abonement.title }}</p>
+
+
+            {% empty %}
+            <div class="alert alert-warning" role="alert">
+                У вас нет тренировок!
+            </div>
+
+
+            {% endfor %}
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

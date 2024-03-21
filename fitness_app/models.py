@@ -170,6 +170,7 @@ class OrderAbonement(models.Model):
     start = models.DateTimeField('Начало', auto_now_add=True)
     end = models.DateTimeField('Конец', blank=True)
     status = models.BooleanField('Оплачен', default=False)
+    active = models.BooleanField('Активен', default=False)
 
     class Meta:
         verbose_name = "Забронированный абонемент"

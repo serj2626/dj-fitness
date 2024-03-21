@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.contrib import messages
-from .models import OrderTraining, Trainer, Abonement, OrderAbonement, Reviews
+from .models import OrderTraining, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining
 from .forms import OrderAbonementForm, RatingForm, ReviewForm, OrderTrainingForm
 from common.mixins import TitleMixin
 from django.views.generic.base import TemplateView, View
@@ -62,27 +62,27 @@ class TrainerDetailView(TitleMixin, DetailView):
 class OrderAbonementCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
     ''' Оформление абонемента '''
 
-    model =  OrderAbonement
+    model = OrderAbonement
     template_name = 'fitness_app/order_abonement_create.html'
     form_class = OrderAbonementForm
     success_url = reverse_lazy('home')
     title = 'Оформление абонемента'
     success_message = 'Вы успешно оформили абонемент!'
 
-    def post(self, request, *args, **kwargs):
-        super(OrderAbonementCreateView, self).post(request, *args, **kwargs)
-        # checkout_session = stripe.checkout.Session.create(
-        #     line_items=[
-        #         {
-        #             # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-        #             'price': '{{PRICE_ID}}',
-        #             'quantity': 1,
-        #         },
-        #     ],
-        #     mode='payment',
-        #     success_url=settings.DOMAIN_NAME + '/success.html',
-        #     cancel_url=settings.DOMAIN_NAME + '/cancel.html',
-        # )
+    # def post(self, request, *args, **kwargs):
+    #     super(OrderAbonementCreateView, self).post(request, *args, **kwargs)
+    # checkout_session = stripe.checkout.Session.create(
+    #     line_items=[
+    #         {
+    #             # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+    #             'price': '{{PRICE_ID}}',
+    #             'quantity': 1,
+    #         },
+    #     ],
+    #     mode='payment',
+    #     success_url=settings.DOMAIN_NAME + '/success.html',
+    #     cancel_url=settings.DOMAIN_NAME + '/cancel.html',
+    # )
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -124,7 +124,21 @@ class OrderTrainingCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixi
         return super().form_valid(form)
 
 
+class MyAbonementListView(TitleMixin, LoginRequiredMixin, ListView):
 
-class MyAbonementListView(ListView):
-    model = Abonement
-    template_name = "my_abonement_list.html"
+    template_name = "fitness_app/my_abonement_list.html"
+    title = 'Мои абонементы'
+    context_object_name = 'abonements'
+
+    def get_queryset(self):
+        return OrderAbonement.objects.filter(user=self.request.user)
+
+
+class MyTrainingListView(TitleMixin, LoginRequiredMixin, ListView):
+
+    template_name = "fitness_app/my_training_list.html"
+    title = 'Мои тренировки'
+    context_object_name = 'trainings'
+
+    def get_queryset(self):
+        return OrderTraining.objects.filter(user=self.request.user)

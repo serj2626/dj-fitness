@@ -15,7 +15,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Название тарифа</th>
+                    <th scope="col">Название</th>
                     <th scope="col">Цена/руб </th>
                     <th scope="col">Количество месяцев</th>
                     <th scope="col">...</th>
@@ -29,7 +29,7 @@
                     <td>{{ticket.title }}</td>
                     <td>{{ticket.price}}</td>
                     <td>{{ticket.number_of_months}}</td>
-                    <td><a class="btn btn-primary" href="">Купить</td>
+                    <td><a href="{% url 'order_abonement_create' %}" class="btn btn-primary">Перейти к оформлению</td>
                 </tr>
                 {% endfor %}
 

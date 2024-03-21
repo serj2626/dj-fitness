@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     HomeView, TrainerListView, AbonementListView, TrainerDetailView,
-    OrderAbonementCreateView, AddReview, OrderTrainingCreateView, MyAbonementListView
+    OrderAbonementCreateView, AddReview, OrderTrainingCreateView, MyAbonementListView, MyTrainingListView
 )
 
 
@@ -16,5 +16,5 @@ urlpatterns = [
     path('trainers/<pk>/review/add', AddReview.as_view(), name='add_review'),
     path('order/training/create', OrderTrainingCreateView.as_view(), name='order_training'),
     path('my-abonements/', MyAbonementListView.as_view(), name='my_abonements'),
-    path('trainings/', HomeView.as_view(), name='trainings'),
+    path('my-trainings/', MyTrainingListView.as_view(), name='my_trainings'),
 ]
