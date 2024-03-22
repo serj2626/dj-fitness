@@ -25,8 +25,10 @@
             </p>
             <form action="" method="post" class="w-50 mx-auto">
                 {% csrf_token %}
-                {{ form.as_p }}
-                <div class="btn-group">
+                <input type="hidden" name="article_id" value="{{ article.id }}">
+                {{ form.text }}
+                
+                <div class="mt-3 btn-group">
                     <input class="border border-2 border-white btn btn-success" type="submit" value="Отправить">
                     {% include 'components/UI/BackButton.html' %}
                 </div>
@@ -52,7 +54,7 @@
                         <div class="text-white">{{ comment.created_at|date:"d.m.Y H:i" }}</div>
                     </div>
                    
-                    <a href="#">Ответить</a>
+                    <a onclick="addComment('{{ comment.id }}')" class="text-warning" href="">Ответить</a>
                   </div>
                   <span class="d-block text-white ">{{comment.text}}</span>
                 </div>
@@ -71,6 +73,12 @@
 
 </div>
 
+
+<script>
+
+
+    const addComment = '';
+</script>
 
 
 {% endblock body %}

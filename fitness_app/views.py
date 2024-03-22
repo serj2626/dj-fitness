@@ -1,7 +1,7 @@
 import stripe
-
+from http import HTTPStatus
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from django.contrib import messages
 from .models import OrderTraining, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining
@@ -59,6 +59,20 @@ class TrainerDetailView(TitleMixin, DetailView):
         return context
 
 
+class SuccessTemplateView(TitleMixin, TemplateView):
+    ''' Страница успешного оформления '''
+
+    template_name = 'fitness_app/success.html'
+    title = 'Спасибо!'
+
+
+class CancelTemplateView(TitleMixin, TemplateView):
+    ''' Страница отмены '''
+
+    template_name = 'fitness_app/cancel.html'
+    title = 'Отмена'
+
+
 class OrderAbonementCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
     ''' Оформление абонемента '''
 
@@ -69,20 +83,23 @@ class OrderAbonementCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMix
     title = 'Оформление абонемента'
     success_message = 'Вы успешно оформили абонемент!'
 
-    # def post(self, request, *args, **kwargs):
-    #     super(OrderAbonementCreateView, self).post(request, *args, **kwargs)
-    # checkout_session = stripe.checkout.Session.create(
-    #     line_items=[
-    #         {
-    #             # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-    #             'price': '{{PRICE_ID}}',
-    #             'quantity': 1,
-    #         },
-    #     ],
-    #     mode='payment',
-    #     success_url=settings.DOMAIN_NAME + '/success.html',
-    #     cancel_url=settings.DOMAIN_NAME + '/cancel.html',
-    # )
+    def post(self, request, *args, **kwargs):
+        super(OrderAbonementCreateView, self).post(request, *args, **kwargs)
+        checkout_session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    'price': 'price_1OxCk22NWu5rst1qs5XNvq5E',
+                    'quantity': 1,
+                },
+            ],
+            mode='payment',
+            success_url='{}{}'.format(
+                settings.DOMAIN_NAME, reverse('order_success')),
+            cancel_url='{}{}'.format(
+                settings.DOMAIN_NAME, reverse('order_cancel')),
+        )
+        return HttpResponseRedirect(checkout_session.url, status=HTTPStatus.SEE_OTHER)
 
     def form_valid(self, form):
         form.instance.user = self.request.user

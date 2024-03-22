@@ -22,12 +22,12 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Тренер</th>
-                        <th scope="col">Кол-во минут</th>
                         <th scope="col">Цена/руб</th>
                         <th scope="col">Начало</th>
                         <th scope="col">Конец</th>
                         <th scope="col">Статус</th>
                         <th scope="col">Оплачен</th>
+                        <th scope="col">Действие</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +35,6 @@
                     <tr>
                         <th scope="row">{{ train.id }}</th>
                         <td><span>{{ train.trainer }}</span></td>
-                        <td>{{ train.rate.count_minutes }}</td>
                         <td>{{ train.rate.price }}</td>
                         <td>{{ train.start }}</td>
                         <td>{{ train.end }}</td>
@@ -51,6 +50,13 @@
                             <i class="fa-solid fa-check fa-lg" style="color: #15da07;"></i>
                             {% else %}
                             <i class="fa-solid fa-xmark fa-lg" style="color: #b80505;"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not train.status %}
+                            <a style="cursor: pointer;text-decoration: none; color: #1d1bac" href="">Оплатить</a>
+                            {% else %}
+                            -------
                             {% endif %}
                         </td>
                     </tr>

@@ -12,13 +12,13 @@
 <div class="container text-center">
 
     <div class="card bg-secondary bg-opacity-75 border border-2 border-white rounded-2 ">
-        <p class="fs-2 text-warning">Обновить профиль</p>
+        <p class="fs-3 mt-2 text-warning">Настройки профиля</p>
 
         <div class=" py-4 mt-2 ">
             <div class="d-flex justify-content-around align-items-center  ">
                 <div class="">
                     <img id="avatar" src="{{ request.user.avatar.url }}" width="500px" height="500px"
-                        class="img-fluid rounded-start">
+                        class="img-fluid rounded-2">
                 </div>
                 <div class="text-black w-25">
                     <form action="" method="post" enctype="multipart/form-data">
@@ -62,7 +62,7 @@
 
 
 
-                        <button class="btn btn-primary px-4 border border-2 border-white" type="submit">Обновить</button>
+                        <button class="btn btn-success px-4 border border-2 border-white" type="submit">Обновить</button>
                         {% include 'components/UI/BackButton.html' %}
                     </form>
                 </div>

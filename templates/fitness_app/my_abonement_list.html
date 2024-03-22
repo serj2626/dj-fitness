@@ -28,6 +28,7 @@
                         <th scope="col">Окончание</th>
                         <th scope="col">Статус</th>
                         <th scope="col">Оплачен</th>
+                        <th scope="col">Действие</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +51,15 @@
                             <i class="fa-solid fa-check fa-lg" style="color: #15da07;"></i>
                             {% else %}
                             <i class="fa-solid fa-xmark fa-lg" style="color: #b80505;"></i>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not abon.status %}
+                            <a style="cursor: pointer;text-decoration: none; color: #1d1bac" href="">
+                                Оплатить
+                            </a>
+                            {% else %}
+                            -------
                             {% endif %}
                         </td>
                     </tr>
