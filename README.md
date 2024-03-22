@@ -1,10 +1,14 @@
 # Сайт Фитнес-клуба на Django
 
 ![DJ FITNESS](static/screen/screen1.png)
-### На сайте представлены спортивные статьи
-![DJ FITNESS](static/screen/post_detail.png)
-### Оформление абонемента с последующей оплатой
-![DJ FITNESS](static/screen/order_abonement.png)
+
+# Возможности   
+> -   На сайте представлены спортивные статьи
+   ![DJ FITNESS](static/screen/post_detail.png)
+> -   Оформление абонемента с последующей оплатой
+  ![DJ FITNESS](static/screen/order_abonement.png)
+> -   Оформление персональной тренировки с тренером
+  ![DJ FITNESS](static/screen/person_training.png)
 
 ## Инструменты
 > 
@@ -28,6 +32,7 @@
  - [x] Оформление абонемента
  - [x] Оформление персональной тренировки
  - [x] Новое приложение постов
+ - [x] Функции добавления лайка или дизлайка к посту
  - [x] Установка CK-EDITOR для работы с постами
  - [ ] Подключение Stripe для оплаты абонемента
  - [ ] Покупка абонемента
