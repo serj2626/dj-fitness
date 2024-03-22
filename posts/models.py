@@ -32,6 +32,7 @@ class Article(models.Model):
     '''
 
     title = models.CharField('Заголовок статьи', max_length=100)
+    image = models.ImageField('Изображение', upload_to='articles/%Y/%m/%d/', blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, blank=True, null=True,
         verbose_name='Категория', related_name='articles')

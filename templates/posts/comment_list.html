@@ -17,18 +17,54 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <p class="text-white fs-3 text-center mb-4">Комментарии к посту <span class="text-warning">{{ article|upper }}</span></p>
-        <div class="w-75 mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
-            
-            {% for comment in  comments %}
-                {{ comment }}
+
+        <div class="w-100 mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
+            <p class="text-white fs-3 text-center mb-4">
+                Статья
+                <span class="text-warning">{{ article|upper }}</span>
+            </p>
+            <form action="" method="post" class="w-50 mx-auto">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="btn-group">
+                    <input class="border border-2 border-white btn btn-success" type="submit" value="Отправить">
+                    {% include 'components/UI/BackButton.html' %}
+                </div>
+
+            </form>
+
+            <p class="text-white fs-3 text-center my-5">
+                Комментарии ({{ article.comments.count|default:'0' }})
+            </p>
+
+            <div>
+
+          
+            {% for comment in comments %}
+
+            <div class="d-flex text-muted pt-3 w-100">
+                <img src="{{ comment.user.avatar.url }}" width="40px" height="40px" class="rounded-pill"">
+          
+                <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex flex-column ms-1 g">
+                        <div><strong class="text-warning">{{ user.email|default:'Anonymous' }}</strong></div>
+                        <div class="text-white">{{ comment.created_at|date:"d.m.Y H:i" }}</div>
+                    </div>
+                   
+                    <a href="#">Ответить</a>
+                  </div>
+                  <span class="d-block text-white ">{{comment.text}}</span>
+                </div>
+              </div>
+
 
             {% empty %}
             <div class="alert alert-warning" role="alert">
                 Нет комментариев
             </div>
             {% endfor %}
-                
+        </div>
 
         </div>
     </div>

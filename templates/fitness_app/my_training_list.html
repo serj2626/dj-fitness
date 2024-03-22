@@ -12,24 +12,59 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="w-75  mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
+        <div class="w-100 mx-auto border border-2 border-white bg-secondary bg-opacity-75 p-4 rounded-4">
 
-            <h1>Мои Тренировки</h1>
-
-            {% for train in trains %}
-
-            <p>{{ abonement.title }}</p>
+            <p class="fs-2 text-warning">Мои Тренировки</p>
 
 
-            {% empty %}
-            <div class="alert alert-warning" role="alert">
-                У вас нет тренировок!
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Тренер</th>
+                        <th scope="col">Кол-во минут</th>
+                        <th scope="col">Цена/руб</th>
+                        <th scope="col">Начало</th>
+                        <th scope="col">Конец</th>
+                        <th scope="col">Статус</th>
+                        <th scope="col">Оплачен</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for train in trainings %}
+                    <tr>
+                        <th scope="row">{{ train.id }}</th>
+                        <td><span>{{ train.trainer }}</span></td>
+                        <td>{{ train.rate.count_minutes }}</td>
+                        <td>{{ train.rate.price }}</td>
+                        <td>{{ train.start }}</td>
+                        <td>{{ train.end }}</td>
+                        <td>
+                            {% if train.active %}
+                            Активный
+                            {% else %}
+                            Закрытый
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if train.status %}
+                            <i class="fa-solid fa-check fa-lg" style="color: #15da07;"></i>
+                            {% else %}
+                            <i class="fa-solid fa-xmark fa-lg" style="color: #b80505;"></i>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <div class="alert alert-warning" role="alert">
+                        У вас нет запланированных тренировок!
+                    </div>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="text-end">
+                {% include 'components/UI/BackButton.html' %}
             </div>
-
-
-            {% endfor %}
-
-
         </div>
     </div>
 </div>

@@ -65,7 +65,7 @@ class OrderAbonementCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMix
     model = OrderAbonement
     template_name = 'fitness_app/order_abonement_create.html'
     form_class = OrderAbonementForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('my_abonements')
     title = 'Оформление абонемента'
     success_message = 'Вы успешно оформили абонемент!'
 
@@ -110,12 +110,12 @@ class AddReview(View):
 
 
 class OrderTrainingCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
-    ''' Оформление занятия '''
+    ''' Оформление персональной тренировки '''
 
     model = OrderTraining
     template_name = 'fitness_app/order_training_create.html'
     form_class = OrderTrainingForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('my_trainings')
     title = 'Записаться на тренировку'
     success_message = 'Вы успешно записались на занятие!'
 

@@ -12,7 +12,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="w-75 mx-auto border border-2 border-white bg-secondary bg-opacity-50 p-4 rounded-4">
+        <div class="w-75 mx-auto border border-2 border-white bg-secondary bg-opacity-75 p-4 rounded-4">
 
             <p class="fs-2 text-warning">Мои абонементы</p>
 
@@ -40,16 +40,16 @@
                         <td>{{ abon.end }}</td>
                         <td>
                             {% if abon.active %}
-                                Активный
+                            Активный
                             {% else %}
-                                Закрытый
+                            Закрытый
                             {% endif %}
                         </td>
                         <td>
                             {% if abon.status %}
-                                Оплачен
+                            <i class="fa-solid fa-check fa-lg" style="color: #15da07;"></i>
                             {% else %}
-                                Не оплачен
+                            <i class="fa-solid fa-xmark fa-lg" style="color: #b80505;"></i>
                             {% endif %}
                         </td>
                     </tr>
@@ -61,6 +61,9 @@
                     {% endfor %}
                 </tbody>
             </table>
+            <div class="text-end">
+                {% include 'components/UI/BackButton.html' %}
+            </div>
         </div>
     </div>
 </div>

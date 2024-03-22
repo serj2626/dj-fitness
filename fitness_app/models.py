@@ -27,14 +27,14 @@ class Rate(models.Model):
         ordering = ['-price']
 
     def __str__(self):
-        return self.title
+        return f'Индивидуальное занятие на {self.count_minutes} минут - тариф {self.title}'
 
 
 class Trainer(models.Model):
     # Тренер
 
     POSITIONS = [
-        ('fitness', 'Тренер тренажерного зала'),
+        ('fitness', 'Инструктор тренажерного зала'),
         ('pool', 'Инструктор бассейна'),
         ('yoga', 'Инструктор йоги'),
         ('groups', 'Тренер групповых тренировок'),
@@ -59,7 +59,7 @@ class Trainer(models.Model):
         verbose_name_plural = 'Тренеры'
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} - {self.position}'
+        return f'{self.first_name} {self.last_name} - {self.get_position_display()}'
 
     def get_absolute_url(self):
         return reverse("trainer_detail", kwargs={"pk": self.pk})
@@ -190,12 +190,16 @@ class OrderTraining(models.Model):
     rate = models.ForeignKey(
         Rate, on_delete=models.CASCADE, related_name="user_trainings", blank=True, null=True)
     start = models.DateTimeField("Дата начала")
-    end = models.DateTimeField('Конец', blank=True)
+    end = models.DateTimeField('Конец', blank=True, null=True)
     status = models.BooleanField('Оплачен', default=False)
+    active = models.BooleanField('Активен', default=False)
 
     class Meta:
         verbose_name = "Забронированное занятие"
         verbose_name_plural = "Забронированные занятия"
+
+    def __str__(self):
+        return f'Занятие {self.rate} - {self.trainer}'
 
     def save(self, *args, **kwargs):
         if self.end is None:

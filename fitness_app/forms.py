@@ -45,7 +45,7 @@ class OrderTrainingForm(forms.ModelForm):
     rate = forms.ModelChoiceField(
         label='Тариф', queryset=Rate.objects.all(), empty_label='Выберите тариф')
     start = forms.DateTimeField(label='Дата начала занятия', widget=forms.DateTimeInput(
-        attrs={'class': 'form-control', 'type': 'date'}))
+        attrs={'class': 'form-control', 'type': 'datetime-local'}))
 
     class Meta:
         model = OrderTraining

@@ -5,7 +5,6 @@
 * License: https://bootstrapmade.com/license/
 */
 
-import {PureCounter} from '..vendor/purecounter'
 
 (function() {
   "use strict";
