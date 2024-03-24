@@ -1,0 +1,52 @@
+[
+{
+  "model": "posts.category",
+  "pk": 1,
+  "fields": {
+    "name": "Бицепс | Трицепс",
+    "created_at": "2024-03-21T19:44:01.809Z",
+    "updated_at": "2024-03-21T19:45:16.247Z",
+    "slug": "biceps-triceps"
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 2,
+  "fields": {
+    "name": "Спина",
+    "created_at": "2024-03-21T19:44:50.347Z",
+    "updated_at": "2024-03-21T19:44:50.347Z",
+    "slug": "spina"
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 3,
+  "fields": {
+    "name": "Плечи",
+    "created_at": "2024-03-21T19:44:57.100Z",
+    "updated_at": "2024-03-21T19:44:57.100Z",
+    "slug": "plechi"
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 4,
+  "fields": {
+    "name": "Грудь",
+    "created_at": "2024-03-21T19:45:04.561Z",
+    "updated_at": "2024-03-21T19:45:04.561Z",
+    "slug": "grud"
+  }
+},
+{
+  "model": "posts.category",
+  "pk": 5,
+  "fields": {
+    "name": "Ноги",
+    "created_at": "2024-03-21T19:45:11.112Z",
+    "updated_at": "2024-03-21T19:45:11.112Z",
+    "slug": "nogi"
+  }
+}
+]

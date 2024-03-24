@@ -23,6 +23,7 @@
                 Статья
                 <span class="text-warning">{{ article|upper }}</span>
             </p>
+            <hr class="text-white">
             <form action="" method="post" class="w-50 mx-auto">
                 {% csrf_token %}
                 <input type="hidden" name="article_id" value="{{ article.id }}">

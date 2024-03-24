@@ -1,0 +1,50 @@
+[
+{
+  "model": "fitness_app.orderabonement",
+  "pk": 7,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "abonement": 3,
+    "start": "2024-03-21T16:01:25.984Z",
+    "end": "2025-03-16T16:01:25.984Z",
+    "status": false,
+    "active": false
+  }
+},
+{
+  "model": "fitness_app.orderabonement",
+  "pk": 8,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "abonement": 2,
+    "start": "2024-03-21T18:54:27.409Z",
+    "end": "2024-12-16T18:54:27.408Z",
+    "status": false,
+    "active": false
+  }
+},
+{
+  "model": "fitness_app.orderabonement",
+  "pk": 9,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "abonement": 1,
+    "start": "2024-03-22T15:17:18.555Z",
+    "end": "2024-09-18T15:17:18.555Z",
+    "status": false,
+    "active": false
+  }
+},
+{
+  "model": "fitness_app.orderabonement",
+  "pk": 10,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "abonement": 2,
+    "start": "2024-03-22T20:17:53.397Z",
+    "end": "2024-12-17T20:17:53.397Z",
+    "status": false,
+    "active": false
+  }
+}
+]

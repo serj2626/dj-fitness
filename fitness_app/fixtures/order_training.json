@@ -1,0 +1,41 @@
+[
+{
+  "model": "fitness_app.ordertraining",
+  "pk": 1,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "trainer": "7865ffe3-3958-451d-899c-c1856c10c605",
+    "rate": 3,
+    "start": "2024-03-22T14:56:13Z",
+    "end": "2024-03-22T17:26:13Z",
+    "status": false,
+    "active": false
+  }
+},
+{
+  "model": "fitness_app.ordertraining",
+  "pk": 2,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "trainer": "7865ffe3-3958-451d-899c-c1856c10c605",
+    "rate": 3,
+    "start": "2024-03-22T17:58:00Z",
+    "end": "2024-03-22T20:28:00Z",
+    "status": false,
+    "active": false
+  }
+},
+{
+  "model": "fitness_app.ordertraining",
+  "pk": 3,
+  "fields": {
+    "user": "b5b3a272-0374-40dc-bae3-b957a10fa9d0",
+    "trainer": "40df4504-16e9-4cf9-93c6-05ce76c39bee",
+    "rate": 1,
+    "start": "2024-03-22T15:17:00Z",
+    "end": "2024-03-22T16:17:00Z",
+    "status": false,
+    "active": false
+  }
+}
+]

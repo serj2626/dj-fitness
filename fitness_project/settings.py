@@ -150,6 +150,16 @@ STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 
 
+
+# REDIS
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': 'redis://localhost:6379',
+    }
+}
+
+
 # CKEDITOR-5
 ################################################################
 customColorPalette = [

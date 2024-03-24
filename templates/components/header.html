@@ -7,20 +7,19 @@
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
         <li><a class="nav-link scrollto active" href="">О клубе</a></li>
-        <li><a class="nav-link scrollto" href="{% url 'abonements' %}"> Абонементы</a></li>
+        <li>
+          <a  class="nav-link scrollto" href="{% url 'abonements' %}"> Абонементы</a>
+        </li>
         <li><a class="nav-link scrollto " href="{% url 'trainer_list' %}">Тренеры</a></li>
         <li><a class="nav-link scrollto " href="/gallery">Расписание</a></li>
-        <li><a class="nav-link scrollto" href="#contact">Контакты</a></li>
 
         {% if request.user.is_authenticated %}
 
         <li class="dropdown"><a href="#"><span>Членство клуба</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="{% url 'my_abonements' %}">Абонемент</a></li>
+            <li><a href="{% url 'my_abonements' %}">Мои Абонементы</a></li>
+            <li><a href="{% url 'my_trainings' %}">Мои Тренировки</a></li>
             <li><a href="{% url 'order_training' %}">Записаться на тренировку</a></li>
-
-            <li><a href="{% url 'my_trainings' %}">Тренировки</a></li>
-
             <li><a href="{% url 'profile' %}">Мой профиль</a></li>
             <hr>
             <li><a>{{ request.user.email }}</a></li>

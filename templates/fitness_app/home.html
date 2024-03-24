@@ -5,7 +5,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>DJ Fitness - {% block title %}{% endblock title %}</title>
+  <title>DJ Fitness - {{ title }}</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <link rel="shortcut icon" href="{% static 'assets/img/icon.png' %}" type="image/x-icon"/>
@@ -29,7 +29,48 @@
 <body>
 
   <!-- ======= Header ======= -->
-  {% include 'components/header.html' %}
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center justify-content-lg-between">
+  
+      <h1 class="logo me-auto me-lg-0"><a href="{% url 'home' %}"><span class="text-warning">DJ FITNESS</span></a></h1>
+  
+  
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="">О клубе</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'abonements' %}"> Абонементы</a></li>
+          <li><a class="nav-link scrollto " href="{% url 'trainer_list' %}">Тренеры</a></li>
+          <li><a class="nav-link scrollto " href="/gallery">Расписание</a></li>
+          <li><a class="nav-link scrollto" href="#contact">Контакты</a></li>
+  
+          {% if request.user.is_authenticated %}
+  
+          <li class="dropdown"><a href="#"><span>Членство клуба</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="{% url 'my_abonements' %}">Мои Абонементы</a></li>
+              <li><a href="{% url 'my_trainings' %}">Мои Тренировки</a></li>
+              <li><a href="{% url 'order_training' %}">Записаться на тренировку</a></li>
+              <li><a href="{% url 'profile' %}">Мой профиль</a></li>
+              <hr>
+              <li><a>{{ request.user.email }}</a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link scrollto" href="{% url 'logout' %}">Выйти</a></li>
+  
+          {% else %}
+          <li><a class="nav-link scrollto" href="{% url 'login' %}">Войти</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'register' %}">Регистрация</a></li>
+          {% endif %}
+  
+  
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+  
+      <a href="{% url 'order_abonement_create' %}" class="get-started-btn scrollto">Купить абонемент</a>
+  
+    </div>
+  </header>
   <!-- End Header -->
 
   <!-- ======= Hero Section ======= -->

@@ -1,0 +1,62 @@
+[
+{
+  "model": "fitness_app.trainer",
+  "pk": "40df4504-16e9-4cf9-93c6-05ce76c39bee",
+  "fields": {
+    "position": "pool",
+    "first_name": "Анна",
+    "last_name": "Михайлова",
+    "email": "am@mail.ru",
+    "phone": "9213923688",
+    "rate": 1,
+    "avatar": "trainers/40df4504-16e9-4cf9-93c6-05ce76c39bee/море.jpg",
+    "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, expedita vero. Commodi, eaque quae. Possimus, tempore quisquam! Ipsam maiores odit impedit voluptas quod consequuntur doloremque asperiores incidunt nisi pariatur, aperiam iusto cupiditate consequatur quaerat id necessitatibus sed! Accusantium deserunt eos nulla incidunt sapiente nisi voluptas totam suscipit expedita! Sequi, rerum.",
+    "experience": 1
+  }
+},
+{
+  "model": "fitness_app.trainer",
+  "pk": "64123f25-a809-4c90-a4ff-b4ac54fb2b7f",
+  "fields": {
+    "position": "yoga",
+    "first_name": "Марина",
+    "last_name": "Богданова",
+    "email": "bog@mail.ru",
+    "phone": "9213923611",
+    "rate": 2,
+    "avatar": "trainers/64123f25-a809-4c90-a4ff-b4ac54fb2b7f/marina.jpg",
+    "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, expedita vero. Commodi, eaque quae. Possimus, tempore quisquam! Ipsam maiores odit impedit voluptas quod consequuntur doloremque asperiores incidunt nisi pariatur, aperiam iusto cupiditate consequatur quaerat id necessitatibus sed! Accusantium deserunt eos nulla incidunt sapiente nisi voluptas totam suscipit expedita! Sequi, rerum.",
+    "experience": 2
+  }
+},
+{
+  "model": "fitness_app.trainer",
+  "pk": "7865ffe3-3958-451d-899c-c1856c10c605",
+  "fields": {
+    "position": "fitness",
+    "first_name": "Иван",
+    "last_name": "Максимов",
+    "email": "max@mail.ru",
+    "phone": "89213923666",
+    "rate": 1,
+    "avatar": "trainers/7865ffe3-3958-451d-899c-c1856c10c605/спортзал.jpg",
+    "bio": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, expedita vero. Commodi, eaque quae. Possimus, tempore quisquam! Ipsam maiores odit impedit voluptas quod consequuntur doloremque asperiores incidunt nisi pariatur, aperiam iusto cupiditate consequatur quaerat id necessitatibus sed! Accusantium deserunt eos nulla incidunt sapiente nisi voluptas totam suscipit expedita! Sequi, rerum.",
+    "experience": 1
+  }
+},
+{
+  "model": "fitness_app.trainer",
+  "pk": "c3ed5095-93d6-4e5b-8ab2-880840daeb1a",
+  "fields": {
+    "position": "groups",
+    "first_name": "Иван",
+    "last_name": "Михайлов",
+    "email": "mx@mail.ru",
+    "phone": "9213923644",
+    "rate": 2,
+    "avatar": "trainers/c3ed5095-93d6-4e5b-8ab2-880840daeb1a/село.jpg",
+    "bio": "",
+    "experience": 4
+  }
+}
+]

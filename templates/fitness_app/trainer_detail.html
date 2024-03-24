@@ -22,7 +22,28 @@
     <div class="row">
 
 
-        <div class="card mb-3 p-3">
+        <div class="card mb-3" class="w-50 mx-auto bg-secondary bg-opacity-50">
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <img src="{{ trainer.avatar.url }}" class="img-fluid rounded-start w-100 h-auto">
+                </div>
+                <div class="col-md-6 ">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ trainer.first_name }} {{ trainer.last_name }}</h5>
+                        <p class="card-text">{{ trainer.get_position_display }}.</p>
+                        <p class="card-text"><small class="text-muted">Тренерский опыт от {{ trainer.experience }}
+                                лет</small></p>
+
+                                <div class="parent">
+
+                                </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="card mb-3 p-3">
             <div class="row g-0">
                 <div class="col-md-6">
                     <img src="{{ trainer.avatar.url }}" class="img-fluid rounded-start w-100 ">
@@ -65,7 +86,9 @@
 
                 </div>
             </div>
-        </div>
+        </div> -->
+
+
     </div>
 
 
@@ -142,11 +165,14 @@
 
 
     <script>
+
+        const parent = document.querySelector('.parent')
+        parent.innerHTML = `sdfdasasdsadaassadasdasdasdsds`
         const addReview = (name, id) => {
 
             document.getElementById('contactParent').value = id
             document.getElementById('contactComment').innerText = `${name}, `
-        }
+        };
 
     </script>
     {% endblock body %}

@@ -1,0 +1,32 @@
+[
+{
+  "model": "fitness_app.rate",
+  "pk": 1,
+  "fields": {
+    "title": "Стандартный",
+    "count_minutes": 60,
+    "price": "1000.00",
+    "description": "Час занятий стоит 1000 рублей"
+  }
+},
+{
+  "model": "fitness_app.rate",
+  "pk": 2,
+  "fields": {
+    "title": "Средний",
+    "count_minutes": 120,
+    "price": "2000.00",
+    "description": "Два часа занятий стоят 2000 рублей"
+  }
+},
+{
+  "model": "fitness_app.rate",
+  "pk": 3,
+  "fields": {
+    "title": "Тяжелый",
+    "count_minutes": 150,
+    "price": "3000.00",
+    "description": "Три часа занятий стоят 3000 рублей"
+  }
+}
+]

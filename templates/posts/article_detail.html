@@ -20,7 +20,10 @@
 <div class="container">
     <div class="row">
         <div class="mx-auto text-white bg-white rounded-5">
-            {{ article.title }}
+            <div>
+                <p class="fs-3 text-black my-5 text-monospace">{{ article.title }}</p>
+            </div>
+
 
             {{ article.content|safe }}
 
@@ -60,7 +63,7 @@
         </div>
 
     </div>
-<!-- 
+    <!-- 
     <script>
 
         const countLikes = document.querySelector('.likes')
@@ -74,4 +77,4 @@
         };
     </script> -->
 
-{% endblock body %}
+    {% endblock body %}
