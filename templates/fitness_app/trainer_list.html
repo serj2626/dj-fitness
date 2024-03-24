@@ -10,13 +10,12 @@
 
 {% block body %}
 <div class="container text-center">
-    <div class="row">
+    <div class="row ">
         <p class="fs-2 text-warning mb-5">Наши тренеры</p>
         {% for trainer in trainers %}
+        
         <div class="col-md-4">
-
-
-            <div class="card mb-3" style="width: 26rem; height: 33rem">
+            <div class="card mb-3 border border-1 border-warning" style="width: 27rem; height: 33rem">
                 <img src="{{ trainer.avatar.url }}"  class="h-75 card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">{{ trainer.first_name }} {{ trainer.last_name }}</h5>
@@ -24,8 +23,8 @@
                     <a href="{{ trainer.get_absolute_url }}" class="btn btn-primary">Профиль</a>
                 </div>
             </div>
-
         </div>
+
         {% endfor %}
     </div>
 </div>

@@ -1,7 +1,5 @@
 from email import message
-from typing import Any
 from unicodedata import category
-from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import ListView

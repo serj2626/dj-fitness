@@ -105,6 +105,7 @@ TIME_ZONE = 'Europe/Moscow'
 USE_I18N = True
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # STATIC_
 STATIC_URL = 'static/'
@@ -120,7 +121,7 @@ MEDIA_URL = '/media/'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 
 # REDIRECT
@@ -150,14 +151,25 @@ STRIPE_SECRET_KEY = os.getenv('STRIPE_SECRET_KEY')
 STRIPE_PUBLIC_KEY = os.getenv('STRIPE_PUBLIC_KEY')
 
 
-
-# REDIS
+# CACHES
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
         'LOCATION': 'redis://localhost:6379',
     }
 }
+
+# CELERY settings
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Europe/Moscow'
+
+
 
 
 # CKEDITOR-5
@@ -317,7 +329,8 @@ CKEDITOR_5_CONFIGS = {
         },
         "htmlSupport": {
             "allow": [
-                {"name": "/.*/", "attributes": True, "classes": True, "styles": True}
+                {"name": "/.*/", "attributes": True,
+                    "classes": True, "styles": True}
             ]
         },
     },

@@ -1,3 +1,5 @@
+from django.forms import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from .forms import UserRegistrationForm, ProfileUpdateForm
 
@@ -81,6 +83,10 @@ class ProfileUpdateView(TitleMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile')
+    
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        print(form.cleaned_data.get('avatar'))
+        return super().form_valid(form)
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
