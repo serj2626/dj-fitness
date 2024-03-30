@@ -13,10 +13,10 @@ class ImageTrainer(admin.TabularInline):
 
 @admin.register(Rate)
 class RateAdmin(admin.ModelAdmin):
-    
+
     '''Тарифы тренеров'''
 
-    list_display = ('title','count_minutes', 'price',)
+    list_display = ('title', 'count_minutes', 'price',)
 
 
 @admin.register(Trainer)
@@ -25,21 +25,8 @@ class TrainerAdmin(admin.ModelAdmin):
 
     list_display = ('position', 'first_name', 'last_name',
                     'email', 'phone', 'rate', )
-
+    save_on_top = True
     inlines = [ImageTrainer]
-
-
-# @admin.register(TrainerImages)
-# class TrainerImagesAdmin(admin.ModelAdmin):
-#     '''Admin View for TrainerImages)'''
-
-#     list_display = ('title',  'trainer', )
-
-#     @admin.register(Reviews)
-#     class ReviewsAdmin(admin.ModelAdmin):
-#         '''Admin View for Reviews)'''
-
-#         list_display = ('email', 'name', 'parent', 'trainer', )
 
 
 @admin.register(RatingTrainer)
@@ -56,7 +43,6 @@ class RatingStarAdmin(admin.ModelAdmin):
     list_display = ('value',)
 
 
-
 @admin.register(Abonement)
 class AbonementAdmin(admin.ModelAdmin):
     '''Абонементы'''
@@ -69,8 +55,6 @@ class OrderAbonementAdmin(admin.ModelAdmin):
     '''Забронированные абонемент'''
 
     list_display = ('user', 'abonement', 'start', 'end', 'status', )
-
-
 
 
 admin.site.register(OrderTraining)

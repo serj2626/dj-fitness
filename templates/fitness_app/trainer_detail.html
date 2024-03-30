@@ -35,6 +35,7 @@
                 <p class="card-text text-black fs-5"><small class="text-muted">
                         Тренерский опыт от {{ trainer.experience }}
                         лет</small></p>
+                        <p class="card-text text-black fs-5">Рейтинг {{ trainer.total_rating|default:'0' }}</p>
                 <div class="parent">
 
                     <form class="rate-form" 
@@ -61,7 +62,7 @@
 
         </div>
 
-        <div class="row">
+        <div class="row mt-5">
             {% for photo in trainer.images.all %}
             <div class="col">
                 <img src="{{ photo.image.url }}" height="320px" class="w-100 border border-4 border-white rounded-2">

@@ -4,16 +4,19 @@ from django.contrib.auth import get_user_model
 from traitlets import default
 from .service import get_path_for_avatar_for_trainer
 import uuid
-from dateutil.relativedelta import relativedelta
 from datetime import timedelta
 from django.urls import reverse
 from django.utils import timezone
+from django.db.models import Sum
+
 
 User = get_user_model()
 
 
 class Rate(models.Model):
-    # Цены индивидульных тренировок
+    ''' 
+    Цены индивидульных тренировок
+    '''
 
     title = models.CharField('Название тарифа', max_length=100)
     count_minutes = models.SmallIntegerField('Количество минут', null=True)
@@ -31,7 +34,9 @@ class Rate(models.Model):
 
 
 class Trainer(models.Model):
-    # Тренер
+    ''' 
+    Тренер 
+    '''
 
     POSITIONS = [
         ('fitness', 'Инструктор тренажерного зала'),
@@ -64,9 +69,16 @@ class Trainer(models.Model):
     def get_absolute_url(self):
         return reverse("trainer_detail", kwargs={"pk": self.pk})
 
+    @property
+    def total_rating(self):
+        return round(self.ratings.aggregate(models.Sum('star__value'))['star__value__sum'] / self.ratings.count(), 2)
+
 
 class TrainerImages(models.Model):
-    """Фото тренера"""
+    """
+    Фото тренера
+    """
+
     title = models.CharField("Заголовок", max_length=100, blank=True)
     description = models.TextField("Описание", blank=True)
     image = models.ImageField("Изображение", upload_to="trainers/images/")
@@ -82,7 +94,9 @@ class TrainerImages(models.Model):
 
 
 class RatingStar(models.Model):
-    """Звезда рейтинга"""
+    """
+    Звезда рейтинга
+    """
     value = models.SmallIntegerField("Значение", default=0)
 
     def __str__(self):
@@ -95,11 +109,13 @@ class RatingStar(models.Model):
 
 
 class RatingTrainer(models.Model):
-    """Рейтинг тренера"""
+    """
+    Рейтинг тренера
+    """
     star = models.ForeignKey(
         RatingStar, on_delete=models.CASCADE, verbose_name="звезда")
     trainer = models.ForeignKey(
-        Trainer, on_delete=models.CASCADE, verbose_name="тренер")
+        Trainer, on_delete=models.CASCADE, verbose_name="тренер", related_name="ratings")
     ip = models.CharField("IP адрес", max_length=15)
 
     class Meta:
@@ -115,7 +131,9 @@ class RatingTrainer(models.Model):
 
 
 class Reviews(models.Model):
-    """Отзывы"""
+    """
+    Отзывы
+    """
     email = models.EmailField()
     name = models.CharField("Имя", max_length=100)
     text = models.TextField("Сообщение", max_length=5000)
@@ -140,7 +158,9 @@ class Reviews(models.Model):
 
 
 class Abonement(models.Model):
-    """Абонементы"""
+    """
+    Абонементы
+    """
     title = models.CharField("Название", max_length=100)
     description = models.TextField("Описание")
     price = models.DecimalField("Цена", max_digits=10, decimal_places=2)
@@ -161,7 +181,9 @@ class Abonement(models.Model):
 
 
 class OrderAbonement(models.Model):
-    """Забронировать абонемент"""
+    """
+    Забронировать абонемент
+    """
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="tickets")
@@ -181,7 +203,9 @@ class OrderAbonement(models.Model):
 
 
 class OrderTraining(models.Model):
-    """Забронировать занятие"""
+    """
+    Забронировать занятие
+    """
 
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="trainings")

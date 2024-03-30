@@ -5,6 +5,8 @@
 # На сайте представлен следующий функционал   
 > -   На сайте представлены спортивные статьи
    ![DJ FITNESS](static/screen/post_detail.png)
+> -   Детальная информация о тренере
+   ![DJ FITNESS](static/screen/screen3.png)
 > -   Оформление абонемента с последующей оплатой
   ![DJ FITNESS](static/screen/order_abonement.png)
 > -   Оформление персональной тренировки с тренером

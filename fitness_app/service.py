@@ -1,3 +1,6 @@
+from django.db.models import Sum
+
+
 def get_path_for_avatar_for_trainer(instance, filename):
     return f'trainers/{instance.pk}/{filename}'
 
@@ -9,3 +12,5 @@ def get_client_ip(self, request):
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
+
+
