@@ -1,11 +1,13 @@
+from django.shortcuts import redirect
 import stripe
 from http import HTTPStatus
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from django.contrib import messages
-from .models import OrderTraining, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining
+from .models import RatingTrainer, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining
 from .forms import OrderAbonementForm, RatingForm, ReviewForm, OrderTrainingForm
+from .service import get_client_ip
 from common.mixins import TitleMixin
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
@@ -15,7 +17,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
-
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
 
@@ -50,12 +51,13 @@ class TrainerDetailView(TitleMixin, DetailView):
 
     model = Trainer
     template_name = 'fitness_app/trainer_detail.html'
-    title = 'Тренер'
+
     context_object_name = 'trainer'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["star_form"] = RatingForm()
+        context["title"] = self.get_object()
         return context
 
 
@@ -142,7 +144,6 @@ class OrderTrainingCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixi
 
 
 class MyAbonementListView(TitleMixin, LoginRequiredMixin, ListView):
-
     template_name = "fitness_app/my_abonement_list.html"
     title = 'Мои абонементы'
     context_object_name = 'abonements'
@@ -152,10 +153,24 @@ class MyAbonementListView(TitleMixin, LoginRequiredMixin, ListView):
 
 
 class MyTrainingListView(TitleMixin, LoginRequiredMixin, ListView):
-
     template_name = "fitness_app/my_training_list.html"
     title = 'Мои тренировки'
     context_object_name = 'trainings'
 
     def get_queryset(self):
         return OrderTraining.objects.filter(user=self.request.user)
+
+
+class AddStarRating(View):
+    """Добавление рейтинга тренеру"""
+
+    def post(self, request, pk):
+        print(get_client_ip(self, request))
+        rate = int(request.POST.get("rate"))
+        RatingTrainer.objects.update_or_create(
+            ip=get_client_ip(self, request),
+            trainer_id=pk,
+            defaults={"star_id": rate},
+        )
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -56,6 +56,7 @@ class RatingStarAdmin(admin.ModelAdmin):
     list_display = ('value',)
 
 
+
 @admin.register(Abonement)
 class AbonementAdmin(admin.ModelAdmin):
     '''Абонементы'''

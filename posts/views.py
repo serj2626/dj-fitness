@@ -1,7 +1,10 @@
 from email import message
 from unicodedata import category
+
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from common.mixins import TitleMixin
 from posts.forms import CommentForm
@@ -21,35 +24,43 @@ class ArticleListView(TitleMixin, View):
                       {'articles': articles, 'title': 'Статьи', 'category': category})
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(TitleMixin, DetailView):
     model = Article
     template_name = "posts/article_detail.html"
     context_object_name = "article"
     title = "Статья"
 
 
-class CommentListView(View):
-
-    def get(self, request, pk):
-        form = CommentForm()
-        article = Article.objects.get(id=pk)
-        comments = Comment.objects.filter(article=article)
-        return render(request, 'posts/comment_list.html',
-                      {'comments': comments, 'title': 'Комментарии',
-                       'article': article, 'form': form
-                       })
+class AddReview(View, LoginRequiredMixin):
+    """Оставить отзыв о статье"""
 
     def post(self, request, pk):
         article = Article.objects.get(id=pk)
         form = CommentForm(request.POST)
         if form.is_valid():
-            cd = form.cleaned_data
             form = form.save(commit=False)
-            form.text = cd.get('text')
+            if request.POST.get('parent', None):
+                form.parent = Comment.objects.get(id=int(request.POST.get('parent')))
             form.article = article
             form.user = request.user
             form.save()
         return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+
+
+class CommentListView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, ListView):
+    template_name = "posts/comment_list.html"
+    context_object_name = "comments"
+    title = "Комментарии"
+
+    def get_queryset(self):
+        article = Article.objects.get(id=self.kwargs.get('pk'))
+        return Comment.objects.filter(article=article, parent=None)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['article'] = Article.objects.get(id=self.kwargs.get('pk'))
+        return context
 
 
 class AddLikeView(LoginRequiredMixin, DetailView):

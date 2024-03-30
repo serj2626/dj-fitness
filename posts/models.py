@@ -1,4 +1,5 @@
-
+from calendar import c
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -32,16 +33,17 @@ class Article(models.Model):
     '''
 
     title = models.CharField('Заголовок статьи', max_length=100)
-    image = models.ImageField('Изображение', upload_to='articles/%Y/%m/%d/', blank=True, null=True)
+    image = models.ImageField(
+        'Изображение', upload_to='articles/%Y/%m/%d/', blank=True, null=True)
     category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, blank=True, null=True,
         verbose_name='Категория', related_name='articles')
     content = CKEditor5Field(
         blank=True, verbose_name='Описание', config_name='extends')
     likes = models.ManyToManyField(
-        User, blank=True, related_name='liles', verbose_name='лайки')
+        User, blank=True, related_name='liles', verbose_name='лайки', )
     dislikes = models.ManyToManyField(
-        User, blank=True, related_name='dislikes', verbose_name='дизлайки')
+        User, blank=True, related_name='dislikes', verbose_name='дизлайки', )
     created_at = models.DateTimeField('Создано', auto_now_add=True)
     updated_at = models.DateTimeField('Обновлено', auto_now=True)
 
@@ -55,6 +57,9 @@ class Article(models.Model):
 
     def get_absolute_url(self):
         return reverse("posts:article_detail", kwargs={"pk": self.pk})
+
+
+
 
 
 class Comment(models.Model):
@@ -79,3 +84,7 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'Комментарий от {self.user} к статье {self.article.title}'
+
+    @property
+    def get_hours_ago(self):
+        return (timezone.now() - self.created_at).seconds // 3600

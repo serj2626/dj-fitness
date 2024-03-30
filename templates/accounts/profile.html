@@ -7,13 +7,21 @@
 {% endblock title %}
 
 
+{% block style %}
+<link rel="stylesheet" href="{% static 'assets/accounts.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock style %}
+
 
 {% block body %}
+
+
 <div class="container text-center">
     <div class="row">
 
         <div class="card w-75 mx-auto py-4 border border-3 border-warning fst-italic">
-            <p class="mb-5 text-warning fs-3">Мой профиль</p>
+            <p class="mb-5 text-dark fs-3">Мой профиль</p>
             <div class="d-flex justify-content-around align-items-center pb-5">
                 <div>
                     <img class="rounded-3" src="{{ request.user.avatar.url }}" width="300px" height="300px" alt="">
@@ -60,7 +68,7 @@
                 </div>
             </div>
             <div class="btn-group w-50 mx-auto">
-                <a href="{% url 'profile_edit' request.user.pk %}" class="btn btn-primary"> Редактировать профиль</a>
+                <a href="{% url 'profile_edit' request.user.pk %}" class="btn btn-primary"> Редактировать</a>
                 {% include 'components/UI/BackButton.html' %}
             </div>
 

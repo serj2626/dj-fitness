@@ -1,7 +1,6 @@
 from django.contrib import admin
 from .models import Article, Comment, Category
 
-
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     '''Admin View for Article)'''
@@ -15,7 +14,8 @@ class ArticleAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     '''Admin View for Comment)'''
 
-    list_display = ('parent', 'article', 'user', 'created_at', 'updated_at', )
+    list_display = ('id', 'parent', 'article', 'user',
+                    'created_at', 'updated_at', )
 
 
 @admin.register(Category)
@@ -24,3 +24,5 @@ class CategoryAdmin(admin.ModelAdmin):
 
     list_display = ('name', 'created_at', 'updated_at', 'slug', )
     prepopulated_fields = {'slug': ('name', )}
+
+

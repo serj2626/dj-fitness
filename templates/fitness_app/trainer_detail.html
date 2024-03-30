@@ -13,6 +13,7 @@
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock style %}
 
 
@@ -21,158 +22,334 @@
 <div class="container">
     <div class="row">
 
-
-        <div class="card mb-3" class="w-50 mx-auto bg-secondary bg-opacity-50">
-            <div class="row g-0">
-                <div class="col-md-6">
-                    <img src="{{ trainer.avatar.url }}" class="img-fluid rounded-start w-100 h-auto">
-                </div>
-                <div class="col-md-6 ">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ trainer.first_name }} {{ trainer.last_name }}</h5>
-                        <p class="card-text">{{ trainer.get_position_display }}.</p>
-                        <p class="card-text"><small class="text-muted">Тренерский опыт от {{ trainer.experience }}
-                                лет</small></p>
-
-                                <div class="parent">
-
-                                </div>
-                    </div>
-                </div>
+        <div class="card shadow-lg col-md-7 mx-auto ">
+            <div class="card-header shadow">
+                <p class="card-title text-black fs-3">{{ trainer.get_position_display }}</p>
             </div>
-        </div>
+            <div class="card-img-top h-75">
+                <img src="{{ trainer.avatar.url }}" alt="avatar" class="w-75 shadow-lg py-1">
+            </div>
 
+            <div class="card-header shadow">
+                <p class="card-title text-black fs-4">{{ trainer.first_name }} {{ trainer.last_name }}</p>
+                <p class="card-text text-black fs-5"><small class="text-muted">
+                        Тренерский опыт от {{ trainer.experience }}
+                        лет</small></p>
+                <div class="parent">
 
-        <!-- <div class="card mb-3 p-3">
-            <div class="row g-0">
-                <div class="col-md-6">
-                    <img src="{{ trainer.avatar.url }}" class="img-fluid rounded-start w-100 ">
-                    <form action="" method="post" name="rating">
-                        <b>Рейтинг:</b>
+                    <form class="rate-form" 
+                    action="{% url 'add_star_rating' trainer.id %}" 
+                    method="post">
                         {% csrf_token %}
-                        <input type="hidden" value="{{ movie.id }}" name="movie">
-                        <span class="rating">
-                            {% for k, v in star_form.fields.star.choices %}
-                            <input id="rating{{ v }}" type="radio" name="star" value="{{ k }}">
-                            <label class="" for="rating{{ v }}">{{ k }}</label>
-                            {% endfor %}
-                        </span><br>
-                        <span class="editContent">4.0</span>
+                        <input type="hidden" name="rate" id="rateID" value="">
+                        <button type="submit" id="one" class="fa fa-star rate-btn fa-2x"></button>
+                        <button type="submit" id="two" class="fa fa-star rate-btn fa-2x"></button>
+                        <button type="submit" id="three" class="fa fa-star rate-btn fa-2x"></button>
+                        <button type="submit" id="four" class="fa fa-star rate-btn fa-2x"></button>
+                        <button type="submit" id="five" class="fa fa-star rate-btn fa-2x"></button>
                     </form>
+
+
                 </div>
-                <div class="col-md-6">
-                    <div class="card-body w-100 h-100 ">
-                        <ul class="list-unstyled">
-                            <li>
-                                <h5 class="card-title"><i class="fa-solid fa-user"></i> {{ trainer.first_name }} {{ trainer.last_name }}</h5>
-                            </li>
-                            <li>{{ trainer.get_position_display }}</li>
-                            <li><i class="fa-sharp fa-solid fa-phone"></i> {{ trainer.phone }}</li>
-                            <li><i class="fa-solid fa-envelope"></i> {{ trainer.email }}</li><hr>
-                            <li>{{ trainer.bio }}</li>
-                            <li>Тренерский опыт от {{ trainer.experience }} лет</li>
-                        </ul>
-                        <div>
-
-
-                        </div>
-                         {% include 'components/UI/BackButton.html' %}
-                        <div class="my-5">
-                            {% for image in trainer.images.all %}
-                            <img src="{{ image.image.url }}" class="w-100">
-                            {% endfor %}
-                        </div>
-                    </div>
+                <div class="mt-2">
+                    <a class="text-black fs-5" href="#commentsID">Отзывы ({{ trainer.reviews.count|default:'0' }})</a>
 
                 </div>
             </div>
-        </div> -->
 
 
+
+        </div>
+
+        <div class="row">
+            {% for photo in trainer.images.all %}
+            <div class="col">
+                <img src="{{ photo.image.url }}" height="320px" class="w-100 border border-4 border-white rounded-2">
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
 
-    <div class="row">
-        <div class="container">
-            <div class="be-comment-block bg-secondary bg-opacity-50">
-                <h1 class="comments-title">Отзывы ({{ trainer.reviews.count|default:'0' }})</h1>
-                {% for review in trainer.reviews.all %}
+    <div class="container">
+        <div class="container py-5">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="card">
+                        <div class="card-body p-4">
+                            <h4 class="text-center mb-4 pb-2">Nested comments section</h4>
 
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex flex-start">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(10).webp"
+                                            alt="avatar" width="65" height="65" />
+                                        <div class="flex-grow-1 flex-shrink-1">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                        Maria Smantha <span class="small">- 2 hours
+                                                            ago</span>
+                                                    </p>
+                                                    <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small">
+                                                            reply</span></a>
+                                                </div>
+                                                <p class="small mb-0">
+                                                    It is a long established fact that a reader will be
+                                                    distracted
+                                                    by
+                                                    the readable content of a page.
+                                                </p>
+                                            </div>
 
+                                            <div class="d-flex flex-start mt-4">
+                                                <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(11).webp"
+                                                        alt="avatar" width="65" height="65" />
+                                                </a>
+                                                <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                Simona Disa <span class="small">- 3 hours
+                                                                    ago</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            letters, as opposed to using 'Content here,
+                                                            content
+                                                            here',
+                                                            making it look like readable English.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-                <div class="be-comment">
-                    <div class="be-img-comment">
-                        <a href="blog-detail-2.html">
-                            <img src="{% static 'assets/img/avatar.png' %}" alt="" class="be-ava-comment">
-                            <a onclick="addReview('{{ review.name }}', '{{ review.id }}')" class="text-warning"
-                                href="#formReview">Ответить</a>
-                        </a>
-                    </div>
-                    <div class="be-comment-content">
+                                            <div class="d-flex flex-start mt-4">
+                                                <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
+                                                        alt="avatar" width="65" height="65" />
+                                                </a>
+                                                <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                John Smith <span class="small">- 4 hours
+                                                                    ago</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            the majority have suffered alteration in some
+                                                            form,
+                                                            by
+                                                            injected humour, or randomised words.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        <span class="be-comment-name">
-                            <a href="">{{ review.parent }}</a>
-                        </span>
-                        <span class="be-comment-time">
-                            <i class="fa fa-clock-o"></i>
-                            {{ review.created_at }}
-                        </span>
+                                    <div class="d-flex flex-start mt-4">
+                                        <img class="rounded-circle shadow-1-strong me-3"
+                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(12).webp"
+                                            alt="avatar" width="65" height="65" />
+                                        <div class="flex-grow-1 flex-shrink-1">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                        Natalie Smith <span class="small">- 2 hours
+                                                            ago</span>
+                                                    </p>
+                                                    <a href="#!"><i class="fas fa-reply fa-xs"></i><span class="small">
+                                                            reply</span></a>
+                                                </div>
+                                                <p class="small mb-0">
+                                                    The standard chunk of Lorem Ipsum used since the 1500s
+                                                    is
+                                                    reproduced below for those interested. Sections 1.10.32
+                                                    and
+                                                    1.10.33.
+                                                </p>
+                                            </div>
 
-                        <p class="be-comment-text">
-                            {{ review.text }}.
-                        </p>
+                                            <div class="d-flex flex-start mt-4">
+                                                <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp"
+                                                        alt="avatar" width="65" height="65" />
+                                                </a>
+                                                <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                Lisa Cudrow <span class="small">- 4 hours
+                                                                    ago</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            Cras sit amet nibh libero, in gravida nulla.
+                                                            Nulla
+                                                            vel
+                                                            metus
+                                                            scelerisque ante sollicitudin commodo. Cras
+                                                            purus
+                                                            odio,
+                                                            vestibulum in vulputate at, tempus viverra
+                                                            turpis.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <div class="d-flex flex-start mt-4">
+                                                <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(29).webp"
+                                                        alt="avatar" width="65" height="65" />
+                                                </a>
+                                                <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                Maggie McLoan <span class="small">- 5 hours
+                                                                    ago</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            a Latin professor at Hampden-Sydney College in
+                                                            Virginia,
+                                                            looked up one of the more obscure Latin words,
+                                                            consectetur
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex flex-start mt-4">
+                                                <a class="me-3" href="#">
+                                                    <img class="rounded-circle shadow-1-strong"
+                                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp"
+                                                        alt="avatar" width="65" height="65" />
+                                                </a>
+                                                <div class="flex-grow-1 flex-shrink-1">
+                                                    <div>
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <p class="mb-1">
+                                                                John Smith <span class="small">- 6 hours
+                                                                    ago</span>
+                                                            </p>
+                                                        </div>
+                                                        <p class="small mb-0">
+                                                            Autem, totam debitis suscipit saepe sapiente
+                                                            magnam
+                                                            officiis
+                                                            quaerat necessitatibus odio assumenda,
+                                                            perferendis
+                                                            quae
+                                                            iusto
+                                                            labore laboriosam minima numquam impedit quam
+                                                            dolorem!
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
 
-                <form class="form-block" method="post" action="{% url 'add_review' trainer.id %}" id="formReview">
-                    {% csrf_token %}
-                    <input type="hidden" name="parent" id="contactParent" value="">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="form-group fl_icon">
-                                <div class="icon"><i class="fa fa-user"></i></div>
-                                <input name="name" class="form-input" type="text" placeholder="Ваше имя">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 fl_icon">
-                            <div class="form-group fl_icon">
-                                <div class="icon"><i class="fa fa-envelope-o"></i></div>
-                                <input name="email" class="form-input" type="text" placeholder="Ваша почта">
-                            </div>
-                        </div>
-                        <div class="col-xs-12 mt-3">
-                            <div class="form-group">
-                                <textarea id="contactComment" name="text" class="form-input" required=""
-                                    placeholder="Ваш отзыв"></textarea>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary">Отправить</button>
-                        </div>
 
+
+<!-- </div>
+</div>
+
+
+
+</div> -->
+
+
+<!-- <div class="row">
+    <div class="container">
+        <div class="be-comment-block bg-secondary bg-opacity-50">
+            <h1 class="comments-title" id="commentsID">Отзывы ({{ trainer.reviews.count|default:'0' }})</h1>
+            {% for review in trainer.reviews.all %}
+
+
+
+            <div class="be-comment">
+                <div class="be-img-comment">
+                    <a href="blog-detail-2.html">
+                        <img src="{% static 'assets/img/avatar.png' %}" alt="" class="be-ava-comment">
+                        <a onclick="addReview('{{ review.name }}', '{{ review.id }}')" class="text-warning"
+                            href="#formReview">Ответить</a>
+                    </a>
+                </div>
+                <div class="be-comment-content">
+
+                    <span class="be-comment-name">
+                        <a href="">{{ review.parent }}</a>
+                    </span>
+                    <span class="be-comment-time">
+                        <i class="fa fa-clock-o"></i>
+                        {{ review.created_at }}
+                    </span>
+
+                    <p class="be-comment-text">
+                        {{ review.text }}.
+                    </p>
+
+                </div>
+            </div>
+            {% endfor %}
+
+            <form class="form-block" method="post" action="{% url 'add_review' trainer.id %}" id="formReview">
+                {% csrf_token %}
+                <input type="hidden" name="parent" id="contactParent" value="">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group fl_icon">
+                            <div class="icon"><i class="fa fa-user"></i></div>
+                            <input name="name" class="form-input" type="text" placeholder="Ваше имя">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 fl_icon">
+                        <div class="form-group fl_icon">
+                            <div class="icon"><i class="fa fa-envelope-o"></i></div>
+                            <input name="email" class="form-input" type="text" placeholder="Ваша почта">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 mt-3">
+                        <div class="form-group">
+                            <textarea id="contactComment" name="text" class="form-input" required=""
+                                placeholder="Ваш отзыв"></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary">Отправить</button>
                     </div>
 
-                </form>
-            </div>
+                </div>
 
+            </form>
         </div>
 
     </div>
 
+</div> -->
 
 
 
-    <script>
 
-        const parent = document.querySelector('.parent')
-        parent.innerHTML = `sdfdasasdsadaassadasdasdasdsds`
-        const addReview = (name, id) => {
-
-            document.getElementById('contactParent').value = id
-            document.getElementById('contactComment').innerText = `${name}, `
-        };
-
-    </script>
-    {% endblock body %}
+<script src="{% static 'assets/js/script.js' %}"></script>
+{% endblock body %}

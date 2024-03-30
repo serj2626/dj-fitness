@@ -22,7 +22,7 @@
             <li><a href="{% url 'order_training' %}">Записаться на тренировку</a></li>
             <li><a href="{% url 'profile' %}">Мой профиль</a></li>
             <hr>
-            <li><a>{{ request.user.email }}</a></li>
+            <li><a style="cursor: none;">{{ request.user.email }}</a></li>
           </ul>
         </li>
         <li><a class="nav-link scrollto" href="{% url 'logout' %}">Выйти</a></li>
