@@ -1,0 +1,91 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-12 col-lg-10 col-xl-8">
+
+            <div class="card shadow-lg">
+
+                <div class="w-50 mx-auto mt-3 mb-5">
+                    <form method="post" action="{% url 'add_review' trainer.id %}" id="formID">
+                        {% csrf_token %}
+                        <input type="hidden" name="parent" id="contactParent" value="">
+                        {{ form|crispy }}
+                        <div class="text-end">
+                            <input class="btn btn-primary" type="submit" value="Отправить">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-body p-4">
+                    <h4 class="text-center mb-4 pb-2" id="reviewsID">Отзывы</h4>
+
+                    <div class="row">
+
+                        <div class="col">
+
+                            {% for rev in reviews %}
+                            <div class="d-flex flex-start mb-5 border-bottom pb-3">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                    src="{% static 'assets/img/user.png' %}" alt="avatar" width="65" height="65" />
+                                <div class="flex-grow-1 flex-shrink-1">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <p class="mb-1">
+                                                {{rev.name}} <span class="small">{{rev.time_age}} часов назад</span>
+                                            </p>
+                                            <a onclick="addReview('{{ rev.name }}', '{{ rev.id }}')" href="#formID"><i
+                                                    class="fas fa-reply fa-xs"></i><span class="small">
+                                                    Ответить</span></a>
+                                        </div>
+                                        <p class="small mb-0">
+                                            {{rev.text}}.
+                                        </p>
+                                    </div>
+
+
+                                    {% for com in rev.reviews_set.all %}
+
+                                    <div class="d-flex flex-start mt-5">
+                                        <a class="me-3" href="#">
+                                            <img class="rounded-circle shadow-1-strong"
+                                                src="{% static 'assets/img/profile.png' %}" alt="avatar" width="65"
+                                                height="65" />
+                                        </a>
+                                        <div class="flex-grow-1 flex-shrink-1">
+                                            <div>
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <p class="mb-1">
+                                                        {{com.name}} <span class="small">{{com.time_age}} часов назад</span>
+                                                    </p>
+                                                </div>
+                                                <p class="small mb-0">
+                                                    {{com.text}}.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% empty %}
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+
+                            {% empty %}
+                            <div class="alert alert-warning w-50 mx-auto" role="alert">
+                                Нет комментариев
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

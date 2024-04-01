@@ -1,6 +1,3 @@
-from django.db.models import Sum
-
-
 def get_path_for_avatar_for_trainer(instance, filename):
     return f'trainers/{instance.pk}/{filename}'
 
@@ -14,3 +11,6 @@ def get_client_ip(self, request):
     return ip
 
 
+def add_new_training_for_trainer(obj, user, trainer, start, end):
+    calendar = obj(trainer=trainer, user=user, start=start, end=end)
+    calendar.save()

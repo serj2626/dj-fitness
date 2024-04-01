@@ -14,11 +14,11 @@ User = get_user_model()
 
 
 class UserRegistrationForm(forms.ModelForm):
-    email = forms.CharField(widget=forms.EmailInput(
+    email = forms.CharField(label='', widget=forms.EmailInput(
         attrs={'class': 'form-control', 'placeholder': 'Почта'}))
-    password = forms.CharField(widget=forms.PasswordInput(
+    password = forms.CharField(label='', widget=forms.PasswordInput(
         attrs={'class': 'form-control,', 'placeholder': 'Пароль'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(
+    password2 = forms.CharField(label='', widget=forms.PasswordInput(
         attrs={'class': 'form-control', 'placeholder': 'Повторите пароль'}))
 
     class Meta:

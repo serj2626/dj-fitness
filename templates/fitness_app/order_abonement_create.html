@@ -1,5 +1,7 @@
 {% extends 'fitness_app/base.html' %}
+{% load static %}
 
+{% load crispy_forms_tags %}
 
 {% block title %}
 {{ title }}
@@ -15,12 +17,12 @@
             <p class="text-center mb-4 fs-2 text-warning text-uppercase">Оформление абонемента</p>
             <form action="" method="post" class=" text-white">{% csrf_token %}
 
-
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Почта</label>
                     <input type="email" disabled class="form-control" id="exampleFormControlInput1"
                         placeholder="{{user.email}}">
                 </div>
+                
                 <div class="form-group">
                     <label for="exampleFormControlInput1">Имя и Фамилия</label>
                     {% if not user.first_name or not user.last_name %}
@@ -32,23 +34,10 @@
                     {% endif %}
                 </div>
 
-                <div class="form-group my-2">
-                    <div class="d-flex justify-content-around">
-                        <label for="{{form.ticket.id_for_label}}">{{form.abonement.label}}</label><br>
-                        <span class="">{{form.abonement}}</span>
-                    </div>
+                {{ form|crispy }}
 
-                </div>
-                <!-- <div class="form-group">
-            <label for="{{ form.ticket.id_for_label }}">{{ form.ticket.label }}</label>
-            <select name="ticket" multiple class="form-control" id="{{ form.ticket.id_for_label }}">
-                {% for ticket in form.ticket %}
-                <option>{{ ticket }}</option>
-                {% endfor %}
-            </select>
-        </div> -->
                 <div class=" mt-2 btn-group">
-                    <input type="submit" class=" btn btn-outline-warning border border-2 border-white" value="Оформить">
+                    <input type="submit" class=" btn btn-outline-warning border me-2 border-2 border-white" value="Оформить">
                     {% include 'components/UI/BackButton.html' %}
                 </div>
 

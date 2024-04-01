@@ -12,7 +12,7 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="w-75 mx-auto border border-2 border-white bg-secondary bg-opacity-75 p-4 rounded-4">
+        <div class="w-100 mx-auto border border-2 border-white bg-secondary bg-opacity-75 p-4 rounded-4">
 
             <p class="fs-2 text-warning">Мои абонементы</p>
 
@@ -35,7 +35,11 @@
                     {% for abon in abonements %}
                     <tr>
                         <th scope="row">{{ abon.id }}</th>
-                        <td>{{ abon.abonement }}</td>
+                        <td>
+                            <a class="text-black" href="{% url 'abonements' %}">
+                                {{ abon.abonement }}
+                            </a>
+                        </td>
                         <td>{{ abon.abonement.price }}</td>
                         <td>{{ abon.start }}</td>
                         <td>{{ abon.end }}</td>
@@ -55,9 +59,17 @@
                         </td>
                         <td>
                             {% if not abon.status %}
-                            <a style="cursor: pointer;text-decoration: none; color: #1d1bac" href="">
-                                Оплатить
-                            </a>
+                            <span>
+                                <a class="text-success me-3 fs-4" href="" 
+                                title="Оплатить">
+                                    <i class="fa-brands fa-paypal"></i>
+                                </a>
+                                
+                                <a class="text-danger fs-4" href="{% url 'abonement_delete' abon.pk %}" 
+                                title="Удалить">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </span>
                             {% else %}
                             -------
                             {% endif %}

@@ -54,7 +54,16 @@
                         </td>
                         <td>
                             {% if not train.status %}
-                            <a style="cursor: pointer;text-decoration: none; color: #1d1bac" href="">Оплатить</a>
+                            <span>
+                                <a class="text-success me-3 fs-4" href="" 
+                                title="Оплатить">
+                                    <i class="fa-brands fa-paypal"></i>
+                                </a>
+                                
+                                <a class="text-danger fs-4" href="{% url 'training_delete' train.pk %}" 
+                                title="Удалить">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
                             {% else %}
                             -------
                             {% endif %}

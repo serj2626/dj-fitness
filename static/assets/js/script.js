@@ -1,12 +1,14 @@
-const parent = document.querySelector('.parent')
+
+
+// Add Review for coach
 const addReview = (name, id) => {
-
-    document.getElementById('contactParent').value = id
-    document.getElementById('contactComment').innerText = `${name}, `
+    document.querySelector('#contactParent').value = id
+    document.getElementById('textID').innerText = `${name}, `
 };
+// End Review for coach
 
 
-
+// Add Rating
 const one = document.querySelector('#one')
 const two = document.querySelector('#two')
 const three = document.querySelector('#three')
@@ -40,5 +42,5 @@ stars.forEach((item, index) => item.addEventListener('click', () => {
     console.log('hidden =>', hidden.value);
     console.log('form =>', form);
 }));
-
+// End Rating
 

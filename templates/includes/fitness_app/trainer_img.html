@@ -1,0 +1,7 @@
+<div class="row mt-5">
+    {% for photo in trainer.images.all %}
+    <div class="col-md-4 mb-5">
+        <img src="{{ photo.image.url }}" height="360px" class="w-100 border border-2 border-warning rounded-2">
+    </div>
+    {% endfor %}
+</div>

@@ -1,13 +1,14 @@
-from django.shortcuts import redirect
+from urllib import request
+from django.shortcuts import get_object_or_404, redirect
 import stripe
 from http import HTTPStatus
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
 from django.contrib import messages
-from .models import RatingTrainer, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining
+from .models import RatingTrainer, Trainer, Abonement, OrderAbonement, Reviews, OrderTraining, CalendarTrainer
 from .forms import OrderAbonementForm, RatingForm, ReviewForm, OrderTrainingForm
-from .service import get_client_ip
+from .service import get_client_ip, add_new_training_for_trainer
 from common.mixins import TitleMixin
 from django.views.generic.base import TemplateView, View
 from django.views.generic.detail import DetailView
@@ -58,7 +59,27 @@ class TrainerDetailView(TitleMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context["star_form"] = RatingForm()
         context["title"] = self.get_object()
+        context['form'] = ReviewForm()
+        context['reviews'] = Reviews.objects.filter(
+            trainer=self.get_object(), parent__isnull=True)
         return context
+
+
+class AddReview(View):
+    """Отзывы к тренеру"""
+
+    def post(self, request, pk):
+        form = ReviewForm(request.POST)
+        trainer = Trainer.objects.get(id=pk)
+        if form.is_valid():
+            form = form.save(commit=False)
+            if request.POST.get('parent', None):
+                form.parent = Reviews.objects.get(
+                    id=int(request.POST.get('parent')))
+            form.trainer = trainer
+            form.save()
+            messages.success(request, 'Отзыв успешно отправлен')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class SuccessTemplateView(TitleMixin, TemplateView):
@@ -111,21 +132,12 @@ class OrderAbonementCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMix
         return super().form_valid(form)
 
 
-class AddReview(View):
-    """Отзывы"""
+class DeleteAbonementView(TitleMixin, LoginRequiredMixin, View):
 
-    def post(self, request, pk):
-        form = ReviewForm(request.POST)
-        trainer = Trainer.objects.get(id=pk)
-        if form.is_valid():
-            if request.POST.get('parent', None):
-                form.parent = Reviews.objects.get(
-                    id=int(request.POST.get('parent')))
-            form = form.save(commit=False)
-            form.trainer = trainer
-            form.save()
-            messages.success(request, 'Отзыв успешно отправлен')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    def get(self, request, pk):
+        abonement = get_object_or_404(OrderAbonement, pk=pk)
+        abonement.delete()
+        return HttpResponseRedirect(reverse('my_abonements'))
 
 
 class OrderTrainingCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
@@ -140,7 +152,19 @@ class OrderTrainingCreateView(TitleMixin, LoginRequiredMixin, SuccessMessageMixi
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.end = form.instance.start + \
+            timedelta(minutes=form.instance.rate.count_minutes)
+        add_new_training_for_trainer(CalendarTrainer, self.request.user,
+                                     form.instance.trainer, form.instance.start, form.instance.end)
         return super().form_valid(form)
+
+
+class DeleteTrainingView(TitleMixin, LoginRequiredMixin, View):
+
+    def get(self, request, pk):
+        training = get_object_or_404(OrderTraining, pk=pk)
+        training.delete()
+        return HttpResponseRedirect(reverse('my_trainings'))
 
 
 class MyAbonementListView(TitleMixin, LoginRequiredMixin, ListView):
@@ -174,3 +198,12 @@ class AddStarRating(View):
         )
 
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class CalendarTrainerView(TitleMixin, LoginRequiredMixin, ListView):
+    ''' Расписание тренеров '''
+
+    model = CalendarTrainer
+    template_name = "fitness_app/calendar.html"
+    title = 'Расписание тренеров'
+    context_object_name = 'trainings'

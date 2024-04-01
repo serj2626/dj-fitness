@@ -1,3 +1,4 @@
+from tkinter import Label
 from django import forms
 from .models import (OrderAbonement, Rate, RatingTrainer, Abonement,
                      Reviews, RatingStar, OrderTraining, Trainer)
@@ -20,6 +21,19 @@ class OrderAbonementForm(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
     """Форма отзывов"""
+    name = forms.CharField(
+        label="",
+        widget=forms.TextInput(
+            attrs={'class': 'form-control shadow-sm', 'placeholder': 'Ваше имя', 'id': 'nameID'}),
+    )
+    email = forms.EmailField(label='', widget=forms.EmailInput(
+        attrs={'class': 'form-control shadow-sm', 'placeholder': 'Ваша почта'}))
+    text = forms.CharField(
+        label="",
+        widget=forms.Textarea(attrs={
+                              "rows": 2, "cols": 10,  'class': 'form-control shadow-sm', 
+                              'placeholder': 'Напишите ваш отзыв', 'id': 'textID'}),
+    )
 
     class Meta:
         model = Reviews

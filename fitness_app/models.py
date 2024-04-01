@@ -2,9 +2,8 @@ from random import choice
 from django.db import models
 from django.contrib.auth import get_user_model
 from traitlets import default
-from .service import get_path_for_avatar_for_trainer
+from .service import get_path_for_avatar_for_trainer, add_new_training_for_trainer
 import uuid
-from datetime import timedelta
 from django.urls import reverse
 from django.utils import timezone
 from django.db.models import Sum
@@ -71,7 +70,12 @@ class Trainer(models.Model):
 
     @property
     def total_rating(self):
-        return round(self.ratings.aggregate(models.Sum('star__value'))['star__value__sum'] / self.ratings.count(), 2)
+        try:
+            total = round(self.ratings.aggregate(models.Sum('star__value'))[
+                          'star__value__sum'] / self.ratings.count(), 2)
+        except:
+            total = 0
+        return total
 
 
 class TrainerImages(models.Model):
@@ -152,9 +156,9 @@ class Reviews(models.Model):
     def __str__(self):
         return f"{self.name} - {self.email}"
 
-    class Meta:
-        verbose_name = "Отзыв"
-        verbose_name_plural = "Отзывы"
+    @property
+    def time_age(self):
+        return abs((timezone.now() - self.created_at).seconds // 3600)
 
 
 class Abonement(models.Model):
@@ -225,7 +229,26 @@ class OrderTraining(models.Model):
     def __str__(self):
         return f'Занятие {self.rate} - {self.trainer}'
 
-    def save(self, *args, **kwargs):
-        if self.end is None:
-            self.end = self.start + timedelta(minutes=self.rate.count_minutes)
-        super().save(*args, **kwargs)
+
+class CalendarTrainer(models.Model):
+    """
+    Расписание тренировок тренеров
+    """
+
+    trainer = models.ForeignKey(
+        Trainer, on_delete=models.CASCADE, related_name="calendars", verbose_name="Тренер")
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="calendars", blank=True, null=True, verbose_name="Клиент")
+    start = models.DateTimeField(
+        blank=True, null=True, verbose_name="начало тренировки")
+    end = models.DateTimeField(
+        blank=True, null=True, verbose_name="конец тренировки")
+    status = models.BooleanField(default=False, verbose_name="занято")
+
+    class Meta:
+        verbose_name = "Расписание тренера"
+        verbose_name_plural = "Расписание тренеров"
+        ordering = ["start"]
+
+    def __str__(self):
+        return f'Расписание {self.trainer}'

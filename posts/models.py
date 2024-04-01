@@ -59,9 +59,6 @@ class Article(models.Model):
         return reverse("posts:article_detail", kwargs={"pk": self.pk})
 
 
-
-
-
 class Comment(models.Model):
     '''
     Модель комментария'''
@@ -82,9 +79,10 @@ class Comment(models.Model):
         verbose_name_plural = "Комментарии"
         ordering = ('-created_at',)
 
+    @property
+    def time_age(self):
+        return abs((timezone.now() - self.created_at).seconds // 3600)
+
     def __str__(self):
         return f'Комментарий от {self.user} к статье {self.article.title}'
 
-    @property
-    def get_hours_ago(self):
-        return (timezone.now() - self.created_at).seconds // 3600

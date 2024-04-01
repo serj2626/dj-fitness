@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (
     Rate, Trainer, TrainerImages, Reviews, RatingTrainer,
-    RatingStar, Reviews, Abonement, OrderAbonement, OrderTraining)
+    RatingStar, Reviews, Abonement, OrderAbonement,
+    OrderTraining, CalendarTrainer)
 
 
 class ImageTrainer(admin.TabularInline):
@@ -57,4 +58,24 @@ class OrderAbonementAdmin(admin.ModelAdmin):
     list_display = ('user', 'abonement', 'start', 'end', 'status', )
 
 
-admin.site.register(OrderTraining)
+@admin.register(OrderTraining)
+class OrderTrainingAdmin(admin.ModelAdmin):
+    '''Запись на занятие'''
+
+    list_display = ('user', 'trainer', 'rate', 'start',
+                    'end', 'status', 'active', )
+
+
+@admin.register(Reviews)
+class ReviewsAdmin(admin.ModelAdmin):
+    '''Admin View for Reviews'''
+
+    list_display = ('email', 'name', 'text', 'parent',
+                    'trainer', 'created_at', )
+
+
+@admin.register(CalendarTrainer)
+class CalendarTrainerAdmin(admin.ModelAdmin):
+    '''Admin View for CalendarTrainer'''
+
+    list_display = ('trainer', 'user', 'start', 'end', 'status')

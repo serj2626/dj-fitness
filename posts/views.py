@@ -30,6 +30,13 @@ class ArticleDetailView(TitleMixin, DetailView):
     context_object_name = "article"
     title = "Статья"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CommentForm()
+        context['reviews'] = Comment.objects.filter(
+            article=self.get_object(), parent__isnull=True)
+        return context
+
 
 class AddReview(View, LoginRequiredMixin):
     """Оставить отзыв о статье"""
@@ -40,27 +47,13 @@ class AddReview(View, LoginRequiredMixin):
         if form.is_valid():
             form = form.save(commit=False)
             if request.POST.get('parent', None):
-                form.parent = Comment.objects.get(id=int(request.POST.get('parent')))
+                form.parent_id = int(request.POST.get('parent'))
             form.article = article
             form.user = request.user
             form.save()
         return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
 
 
-class CommentListView(TitleMixin, LoginRequiredMixin, SuccessMessageMixin, ListView):
-    template_name = "posts/comment_list.html"
-    context_object_name = "comments"
-    title = "Комментарии"
-
-    def get_queryset(self):
-        article = Article.objects.get(id=self.kwargs.get('pk'))
-        return Comment.objects.filter(article=article, parent=None)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form'] = CommentForm()
-        context['article'] = Article.objects.get(id=self.kwargs.get('pk'))
-        return context
 
 
 class AddLikeView(LoginRequiredMixin, DetailView):
@@ -81,3 +74,9 @@ class AddDislikeView(LoginRequiredMixin, DetailView):
         add_dislike(request, article)
 
         return HttpResponseRedirect(self.request.META.get('HTTP_REFERER'))
+
+
+def delete_comment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    comment.delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

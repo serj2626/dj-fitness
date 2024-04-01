@@ -1,6 +1,6 @@
 {% extends "posts/base.html" %}
 {% load static %}
-
+{% load crispy_forms_tags %}
 
 {% block style %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -19,9 +19,17 @@
 {% block body %}
 <div class="container">
     <div class="row">
-        <div class="mx-auto text-white bg-white rounded-5">
-            <div>
-                <p class="fs-3 text-black my-5 text-monospace">{{ article.title }}</p>
+        <div class="mx-auto  bg-white rounded-5">
+            <div class="my-3 ">
+                <p class="fs-3 text-black text-monospace">{{ article.title }}</p>
+                <a class="btn btn-danger py-2 px-3 position-absolute"
+                style="right: 60px; top: 110px;"
+                href="{{request.META.HTTP_REFERER}}">Назад</a>
+                <p>
+                    <a class="text-primary fs-5" href="#commentsID">Комментариев
+                        (<span class="text-danger">{{ article.comments.count }}</span>)
+                    </a>
+                </p>
             </div>
 
 
@@ -33,48 +41,34 @@
                 <div>
                     <p class="text-white"></p>
                 </div>
-                <div class="my-4 d-flex justify-content-center">
+                <div class="my-5 d-flex justify-content-center mx-auto">
                     <div class="fs-6">
                         <form action="{% url 'posts:add_like' article.pk %}" method="post">{% csrf_token %}
-                            <button onclick="addLike" type="submit" class="likes border-0 bg-light"><i
-                                    class="fa-solid fa-thumbs-up fa-2x mx-1 text-danger"></i> {{ article.likes.count }}
+                            <button id="likeID" type="submit" class="likes border-0 bg-light">
+                                <i class="fa-solid fa-thumbs-up fa-2x mx-1 text-danger"></i>
+                                {{ article.likes.count }}
                             </button>
                         </form>
                     </div>
                     <div class="fs-6">
                         <form action="{% url 'posts:add_dislike' article.pk %}" method="post">{% csrf_token %}
-                            <button onclick="addDislike" type="submit" class="dislikes border-0 bg-light"><i
-                                    class="fa-solid fa-thumbs-up fa-flip-vertical fa-2x mx-1 text-dark"></i>
+                            <button id="dislikeID" type="submit" class="dislikes border-0 bg-light">
+                                <i class="fa-solid fa-thumbs-up fa-flip-vertical fa-2x mx-1 text-dark"></i>
                                 {{ article.dislikes.count }}
                             </button>
                         </form>
                     </div>
                 </div>
-
-                <div class="btn-group">
-                    <a href="{% url 'posts:comment_list' article.pk %}" class="btn btn-primary">Комментарии</a>
-                    {% include 'components/UI/BackButton.html' %}
-                </div>
-
-
             </div>
+
+            {% include 'includes/posts/comments.html' %}
 
 
         </div>
-
     </div>
-    <!-- 
-    <script>
+</div>
 
-        const countLikes = document.querySelector('.likes')
-        const countDislikes = document.querySelector('.dislikes')
 
-        const addLike = () => {
-            alert(countLikes)
-        };
-        const addDislike = () => {
-            alert(countDislikes);
-        };
-    </script> -->
+<script src="{% static 'assets/js/posts.js' %}"></script>
 
-    {% endblock body %}
+{% endblock body %}
