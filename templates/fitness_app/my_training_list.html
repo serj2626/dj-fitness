@@ -55,12 +55,12 @@
                         <td>
                             {% if not train.status %}
                             <span>
-                                <a class="text-success me-3 fs-4" href="" 
+                                <a class="text-success me-3 fs-5" href="" 
                                 title="Оплатить">
                                     <i class="fa-brands fa-paypal"></i>
                                 </a>
                                 
-                                <a class="text-danger fs-4" href="{% url 'training_delete' train.pk %}" 
+                                <a class="text-danger fs-5" href="{% url 'training_delete' train.pk %}" 
                                 title="Удалить">
                                     <i class="fa-solid fa-trash"></i>
                                 </a>
@@ -78,7 +78,9 @@
                 </tbody>
             </table>
             <div class="text-end">
-                {% include 'components/UI/BackButton.html' %}
+                <span style="right: 60px; top:110px" class="position-absolute">
+                    {% include 'components/UI/BackButton.html' %}
+                </span>
             </div>
         </div>
     </div>

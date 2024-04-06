@@ -68,8 +68,15 @@
                 </div>
             </div>
             <div class="btn-group w-50 mx-auto">
-                <a href="{% url 'profile_edit' request.user.pk %}" class="btn btn-primary"> Редактировать</a>
-                {% include 'components/UI/BackButton.html' %}
+                <a href="{% url 'profile_edit' request.user.pk %}" 
+                class="btn btn-primary py-2 "> 
+                Редактировать
+            </a>
+            
+                <a href="{{ request.META.HTTP_REFERER}}" 
+                class="btn btn-danger ms-2 py-2 "> 
+                Назад
+            </a>
             </div>
 
 
